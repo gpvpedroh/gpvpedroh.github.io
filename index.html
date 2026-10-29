@@ -106,6 +106,10 @@ section { padding: 52px 0; border-bottom: 1px solid var(--line); scroll-margin-t
 .about { display: grid; gap: 28px; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
 .about p + p { margin-top: 12px; }
 .about h3 { margin: 26px 0 10px; font-size: 1.05rem; }
+.about ul.pbe { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 8px; }
+.about ul.pbe b { font-weight: 600; }
+.about ul.pbe + p { margin-top: 12px; }
+.about .refs { color: var(--muted); font-size: .9rem; }
 .formacao { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .formacao li { border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; }
 .formacao b { font-weight: 600; display: block; }
@@ -163,7 +167,6 @@ section { padding: 52px 0; border-bottom: 1px solid var(--line); scroll-margin-t
 .opt { position: relative; }
 .opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .opt label { display: grid; gap: 2px; height: 100%; cursor: pointer; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; font-size: .88rem; line-height: 1.3; background: var(--bg); }
-.opt label .v { font-size: .74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .opt input:checked + label { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
 .opt input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
 .opt label:hover { border-color: var(--accent); }
@@ -277,8 +280,27 @@ footer .wrap { display: grid; gap: 6px; }
     <div class="section-head"><h2>Sobre</h2></div>
     <div class="about">
       <div>
-        <p>Sou psicólogo clínico, formado em Psicologia pela Universidade de Fortaleza (Unifor) em 2024, e atendo adultos em psicoterapia individual online, na abordagem da Terapia Cognitivo-Comportamental (TCC).</p>
-        <p>Trabalho dentro da prática baseada em evidências. As decisões sobre o tratamento juntam três coisas: o que a pesquisa científica mostra, a avaliação clínica e o que é importante para você (sua história, seus valores e suas preferências). No dia a dia, isso quer dizer entender com você o que mantém as dificuldades, definir objetivos em conjunto, usar intervenções estudadas em pesquisa e acompanhar a evolução com escalas breves, cujos resultados conversamos em sessão.</p>
+        <p>Sou psicólogo clínico, formado em Psicologia pela Universidade de Fortaleza (Unifor) em 2024. Atendo adultos em psicoterapia individual online, com base na Terapia Cognitivo-Comportamental (TCC).</p>
+
+        <h3>Prática baseada em evidências</h3>
+        <p>Meu trabalho segue a prática baseada em evidências (PBE). Ela parte de um cuidado: sentir-se melhor nem sempre quer dizer que foi a terapia que ajudou. A passagem do tempo, os altos e baixos naturais, outras mudanças na vida e a própria expectativa de melhora também influenciam o que a pessoa sente. E todo terapeuta, como qualquer pessoa, tende a notar mais o que confirma aquilo em que já acredita. Por isso, a escolha do tratamento não pode depender só da minha experiência ou impressão. Ela precisa de critérios que aumentem a chance de ajudar e diminuam o risco de prejudicar, de perder tempo ou de gastar sem necessidade.</p>
+        <p>Na PBE, cada decisão sobre o seu tratamento junta três fontes, e nenhuma substitui as outras:</p>
+        <ul class="pbe">
+          <li><b>A pesquisa científica.</b> O que os estudos mais confiáveis mostram para dificuldades parecidas com a sua, com mais peso para pesquisas bem controladas e para revisões que reúnem muitos estudos.</li>
+          <li><b>A competência clínica.</b> Entender o seu caso, construir uma boa relação de trabalho com você, acompanhar a evolução e ler a pesquisa com senso crítico.</li>
+          <li><b>Você.</b> Seus objetivos, valores, crenças, rotina e contexto de vida. Você participa das decisões sobre o próprio tratamento.</li>
+        </ul>
+        <p>A PBE não é uma técnica nem um protocolo fixo. A pergunta que guia o trabalho é: qual tratamento tem mais chance de ajudar esta pessoa, com esta dificuldade, nestas circunstâncias?</p>
+
+        <h3>Na prática</h3>
+        <ul class="pbe">
+          <li>Começamos entendendo juntos o que mantém as dificuldades. Esse entendimento (a formulação do caso) orienta o plano e é revisto ao longo da terapia.</li>
+          <li>Para a queixa principal, parto de tratamentos já testados em pesquisa e ajusto os procedimentos ao que o seu caso pede.</li>
+          <li>Antes de propor algo, explico o objetivo, como funciona, os possíveis benefícios e riscos e as alternativas. Você pode recusar ou pedir outro caminho.</li>
+          <li>Acompanhamos a evolução com escalas breves no início, durante e ao final, e conversamos sobre os resultados em sessão. Se a melhora não aparece, revemos o plano juntos.</li>
+        </ul>
+        <p>Nenhum tratamento garante resultado. O que a PBE oferece é escolher com critério e verificar, ao longo do caminho, se está funcionando.</p>
+        <p class="refs">Para saber mais: Leonardi &amp; Meyer (2015), <a href="https://doi.org/10.1590/1982-3703001552014" target="_blank" rel="noopener noreferrer">artigo em português sobre a história da PBE</a>; American Psychological Association (2006); Spring (2007).</p>
 
         <h3>Formação</h3>
         <ul class="formacao">
@@ -729,8 +751,8 @@ footer .wrap { display: grid; gap: 6px; }
       if (checkedValue === o.v) inp.checked = true;
       inp.addEventListener("change", function () { onChange(o.v); });
       wrap.appendChild(inp);
-      var pts = "<span class=\"v\">" + o.v + " " + (o.v === 1 ? "ponto" : "pontos") + "</span>";
-      wrap.appendChild(el("label", { "for": id }, esc(o.t) + pts));
+      /* O valor de cada opção não aparece na tela, para não influenciar a resposta */
+      wrap.appendChild(el("label", { "for": id }, esc(o.t)));
       box.appendChild(wrap);
     });
     return box;
