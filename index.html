@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Privacidade: a página não faz nenhuma conexão com outros servidores (fontes locais, sem analytics, sem formulários). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Pedro Vasconcelos · Psicólogo</title>
+<meta name="description" content="Pedro Henrique Gomes Pinheiro Vasconcelos, psicólogo (CRP 11/24900). Psicoterapia individual online para adultos em Terapia Cognitivo-Comportamental.">
+<style>
+/* Fontes IBM Plex hospedadas no próprio site (pasta fonts/, licença SIL OFL 1.1) */
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Serif"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/ibm-plex-serif-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Serif"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/ibm-plex-serif-latin-600-normal.woff2") format("woff2"); }
+
+/* Layout: uma coluna sóbria de leitura; escalas em painel com itens à esquerda e resultado fixo à direita */
+:root {
+  --bg: #f5f7f8;
+  --surface: #ffffff;
+  --ink: #16232a;
+  --muted: #56656d;
+  --line: #dbe1e4;
+  --accent: #1d5a63;
+  --accent-soft: #e4eef0;
+  --ok: #2d6a46;      --ok-soft: #e3f1e8;
+  --warn: #8a5d0a;    --warn-soft: #f8eedb;
+  --high: #a2481c;    --high-soft: #f9e8df;
+  --crit: #9e2f2f;    --crit-soft: #f7e3e3;
+  --font-display: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1619; --surface: #162127; --ink: #e5ecee; --muted: #9caab0; --line: #283840;
+    --accent: #79b8c0; --accent-soft: #1b3237;
+    --ok: #7cc79a; --ok-soft: #173326; --warn: #e2b660; --warn-soft: #352a12;
+    --high: #ee9d74; --high-soft: #3a2116; --crit: #f08b8b; --crit-soft: #3b1a1a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1619; --surface: #162127; --ink: #e5ecee; --muted: #9caab0; --line: #283840;
+  --accent: #79b8c0; --accent-soft: #1b3237;
+  --ok: #7cc79a; --ok-soft: #173326; --warn: #e2b660; --warn-soft: #352a12;
+  --high: #ee9d74; --high-soft: #3a2116; --crit: #f08b8b; --crit-soft: #3b1a1a;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+}
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; text-wrap: balance; margin: 0; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.15rem; }
+p { margin: 0; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+/* Cabeçalho */
+.top { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 60px; flex-wrap: wrap; }
+.brand { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); padding: 8px 0; }
+.brand strong { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+.brand span { font-size: .8rem; color: var(--muted); }
+.nav { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.nav a { text-decoration: none; color: var(--muted); font-size: .92rem; padding: 6px 10px; border-radius: 6px; }
+.nav a:hover { color: var(--ink); background: var(--accent-soft); }
+.nav a.nav-cta { color: var(--accent); border: 1px solid var(--accent); }
+.nav a.nav-cta:hover { background: var(--accent-soft); color: var(--accent); }
+
+/* Abertura */
+.intro { padding: 56px 0 40px; border-bottom: 1px solid var(--line); }
+.intro .wrap { display: grid; gap: 28px; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
+.intro h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 14px; }
+.intro .lead { font-size: 1.12rem; color: var(--muted); max-width: 60ch; }
+.facts { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 12px; margin: 0; }
+.facts div { display: grid; gap: 2px; }
+.facts dt { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.facts dd { margin: 0; font-weight: 500; }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.cta-note { margin-top: 10px; font-size: .86rem; color: var(--muted); max-width: 60ch; }
+.cta-note a { color: var(--accent); }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: .95rem; font-weight: 500; cursor: pointer;
+  padding: 9px 16px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: var(--surface); text-decoration: none; }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.ghost:hover { background: var(--accent-soft); filter: none; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; filter: none; }
+
+section { padding: 52px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 64px; }
+.section-head { display: grid; gap: 8px; margin-bottom: 24px; max-width: 68ch; }
+.section-head p { color: var(--muted); }
+
+/* Sobre */
+.about { display: grid; gap: 28px; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
+.about p + p { margin-top: 12px; }
+.about h3 { margin: 26px 0 10px; font-size: 1.05rem; }
+.formacao { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.formacao li { border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; }
+.formacao b { font-weight: 600; display: block; }
+.formacao span { color: var(--muted); font-size: .92rem; }
+.summary-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 12px; }
+.summary-box h3 { margin: 0; font-size: 1.05rem; }
+.summary-box ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: .95rem; }
+.summary-box .more { font-weight: 500; }
+
+/* Como funciona o atendimento */
+.groups { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+.group { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.group h3 { font-size: 1.05rem; }
+.group ul { margin: 0; padding-left: 18px; display: grid; gap: 7px; font-size: .94rem; }
+.group.alert { border-left: 4px solid var(--crit); }
+
+/* Avisos */
+.notes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-bottom: 24px; }
+.note { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); border-radius: 8px; padding: 12px 16px; font-size: .92rem; }
+.note.alert { border-left-color: var(--crit); }
+.note strong { display: block; margin-bottom: 2px; }
+
+/* Alerta do item 9 do PHQ-9 */
+.risk { border: 1px solid var(--crit); border-left: 6px solid var(--crit); background: var(--crit-soft); color: var(--ink); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 8px; font-size: .94rem; }
+.risk strong.title { color: var(--crit); font-size: 1rem; }
+.risk ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.risk[hidden] { display: none; }
+
+/* Abas das escalas */
+.tabs { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 20px; }
+.tab { text-align: left; font: inherit; cursor: pointer; background: var(--surface); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; display: grid; gap: 2px; }
+.tab:hover { border-color: var(--accent); }
+.tab[aria-selected="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); background: var(--accent-soft); }
+.tab b { font-weight: 600; }
+.tab span { font-size: .82rem; color: var(--muted); }
+
+.scale { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
+.scale-main { display: grid; gap: 16px; }
+.scale-info { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 8px; }
+.scale-info .instr { font-weight: 500; }
+.scale-info small { color: var(--muted); font-size: .84rem; }
+.doses { border-top: 1px solid var(--line); padding-top: 10px; display: grid; gap: 6px; font-size: .9rem; }
+.doses ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; }
+.doses .who { color: var(--muted); font-size: .86rem; }
+
+.item { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 14px 16px; margin: 0; min-width: 0; }
+.item.done { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.item.extra { border-style: dashed; }
+.item legend { float: left; width: 100%; padding: 0; font-weight: 500; margin-bottom: 10px; display: flex; gap: 10px; }
+.item .opts { clear: both; }
+.item legend .n { color: var(--accent); font-variant-numeric: tabular-nums; min-width: 1.6em; }
+.item .hint { clear: both; display: block; font-size: .82rem; color: var(--muted); margin: -4px 0 10px; }
+.opts { display: grid; gap: 6px; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.opt label { display: grid; gap: 2px; height: 100%; cursor: pointer; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; font-size: .88rem; line-height: 1.3; background: var(--bg); }
+.opt label .v { font-size: .74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.opt input:checked + label { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.opt input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+.opt label:hover { border-color: var(--accent); }
+
+/* Painel de resultado */
+.result { position: sticky; top: 76px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: grid; gap: 14px; }
+.result h3 { font-size: 1rem; }
+.progress { display: grid; gap: 6px; font-size: .85rem; color: var(--muted); }
+.bar { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+.score { display: grid; gap: 4px; }
+.score .big { font-family: var(--font-display); font-size: 2.4rem; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; }
+.score .big small { font-size: 1rem; color: var(--muted); font-family: var(--font-body); font-weight: 400; }
+.chip { display: inline-block; justify-self: start; padding: 3px 10px; border-radius: 99px; font-size: .82rem; font-weight: 600; }
+.sev-0 { color: var(--ok); background: var(--ok-soft); }
+.sev-1 { color: var(--warn); background: var(--warn-soft); }
+.sev-2 { color: var(--high); background: var(--high-soft); }
+.sev-3, .sev-4 { color: var(--crit); background: var(--crit-soft); }
+.subs { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.subs li { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: .9rem; border-top: 1px solid var(--line); padding-top: 8px; }
+.subs li b { font-variant-numeric: tabular-nums; }
+.subs .chip { font-size: .75rem; }
+.result .explain { font-size: .86rem; color: var(--muted); }
+.result .actions { display: grid; gap: 8px; }
+.result label.ini { font-size: .85rem; display: grid; gap: 4px; }
+.result input[type="text"] { font: inherit; font-size: .92rem; padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.result .risk { font-size: .86rem; padding: 10px 12px; }
+.copy-status { font-size: .84rem; color: var(--ok); min-height: 1.2em; }
+.copy-fallback { width: 100%; min-height: 120px; font: inherit; font-size: .82rem; padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.empty { font-size: .9rem; color: var(--muted); }
+
+/* Publicações */
+.pub { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; display: grid; gap: 8px; max-width: 78ch; }
+.pub .meta { font-size: .85rem; color: var(--muted); }
+.pub h3 { font-size: 1.12rem; }
+.pub .authors { font-size: .92rem; }
+.pub .kw { display: flex; gap: 6px; flex-wrap: wrap; }
+.pub .kw span { font-size: .78rem; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); }
+.pub-more { margin-top: 16px; font-size: .92rem; color: var(--muted); }
+
+/* Contato */
+.contact { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: grid; gap: 4px; }
+.card dt { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.card dd { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+.booking { margin-top: 12px; background: var(--accent-soft); border: 1px solid var(--accent); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 10px; scroll-margin-top: 80px; }
+.booking h3 { font-size: 1.05rem; }
+.booking p { font-size: .94rem; }
+.booking .cta-note { margin: 0; }
+.privacy { margin-top: 28px; display: grid; gap: 12px; max-width: 78ch; scroll-margin-top: 80px; }
+.privacy h3 { font-size: 1.1rem; }
+.privacy p { font-size: .94rem; color: var(--ink); }
+.privacy p b { font-weight: 600; }
+
+footer { padding: 28px 0 40px; font-size: .85rem; color: var(--muted); }
+footer .wrap { display: grid; gap: 6px; }
+
+@media (max-width: 820px) {
+  .intro .wrap, .about { grid-template-columns: 1fr; }
+  .scale { grid-template-columns: 1fr; }
+  .result { position: static; }
+}
+@media (max-width: 420px) {
+  .opts { grid-template-columns: 1fr 1fr; }
+  .nav a { padding: 6px 7px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">
+      <strong>Pedro Vasconcelos</strong>
+      <span>Psicólogo · CRP 11/24900</span>
+    </a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#sobre">Sobre</a>
+      <a href="#atendimento">Atendimento</a>
+      <a href="#escalas">Escalas</a>
+      <a href="#publicacoes">Publicações</a>
+      <a href="#contato">Contato</a>
+      <a class="nav-cta" href="#agendar">Agendar</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="intro" id="inicio">
+  <div class="wrap">
+    <div>
+      <h1>Psicoterapia individual online para adultos</h1>
+      <p class="lead">Atendimento em Terapia Cognitivo-Comportamental (TCC), por videochamada, dentro da prática baseada em evidências, com acompanhamento do progresso por meio de escalas validadas.</p>
+      <div class="cta">
+        <a class="btn js-agendar" href="https://wa.me/5585999986491?text=Ol%C3%A1%2C%20Pedro!%20Gostaria%20de%20agendar%20uma%20primeira%20sess%C3%A3o." target="_blank" rel="noopener noreferrer">Agendar primeira sessão</a>
+        <a class="btn ghost" href="https://wa.me/5585999986491" target="_blank" rel="noopener noreferrer">Tirar dúvidas pelo WhatsApp</a>
+      </div>
+      <p class="cta-note">Já está em atendimento? <a href="#escalas">Responda a escala combinada em sessão</a>.</p>
+    </div>
+    <dl class="facts">
+      <div><dt>Psicólogo</dt><dd>Pedro Henrique Gomes Pinheiro Vasconcelos</dd></div>
+      <div><dt>Registro</dt><dd>CRP 11/24900 (Ceará)</dd></div>
+      <div><dt>Abordagem</dt><dd>Terapia Cognitivo-Comportamental</dd></div>
+      <div><dt>Modalidade</dt><dd>Online, pelo Google Meet, no Brasil e no exterior</dd></div>
+    </dl>
+  </div>
+</div>
+
+<section id="sobre">
+  <div class="wrap">
+    <div class="section-head"><h2>Sobre</h2></div>
+    <div class="about">
+      <div>
+        <p>Sou psicólogo clínico, formado em Psicologia pela Universidade de Fortaleza (Unifor) em 2024, e atendo adultos em psicoterapia individual online, na abordagem da Terapia Cognitivo-Comportamental (TCC).</p>
+        <p>Trabalho dentro da prática baseada em evidências. As decisões sobre o tratamento juntam três coisas: o que a pesquisa científica mostra, a avaliação clínica e o que é importante para você (sua história, seus valores e suas preferências). No dia a dia, isso quer dizer entender com você o que mantém as dificuldades, definir objetivos em conjunto, usar intervenções estudadas em pesquisa e acompanhar a evolução com escalas breves, cujos resultados conversamos em sessão.</p>
+
+        <h3>Formação</h3>
+        <ul class="formacao">
+          <li><b>Graduação em Psicologia</b><span>Universidade de Fortaleza (Unifor), 2024</span></li>
+          <li><b>Formação em Psicoterapia Baseada em Evidências</b><span>Instituto de Psicologia Baseada em Evidências (InPBE), 160 h, 2022–2023</span></li>
+          <li><b>Pós-graduação lato sensu em Prática Baseada em Evidências em Psicologia Clínica</b><span>InPBE (cursando)</span></li>
+          <li><b>Artigo publicado</b><span>PLURAL – Revista de Psicologia UNESP Bauru, 2025 · <a href="#publicacoes">ver publicações</a></span></li>
+        </ul>
+      </div>
+      <aside class="summary-box" aria-labelledby="resumo-titulo">
+        <h3 id="resumo-titulo">Em resumo</h3>
+        <ul>
+          <li>Atendimento individual para adultos (18 anos ou mais), por videochamada no Google Meet, no Brasil ou no exterior.</li>
+          <li>Sessões de 50 ou 30 minutos, semanais, quinzenais ou avulsas. As regras de horário, faltas e cancelamento ficam em um contrato escrito, combinado antes de começarmos.</li>
+          <li><strong>Sigilo:</strong> o que você conta, o fato de estar em terapia e os seus registros ficam entre nós. As exceções são risco grave à sua vida ou à de outra pessoa, ou exigência da lei ou da Justiça. Mesmo nesses casos, informo só o estritamente necessário.</li>
+          <li>Seus registros de atendimento (prontuário) ficam guardados com segurança por pelo menos 20 anos, e você pode pedir para ver o que está registrado sobre você.</li>
+          <li>As sessões não são gravadas. Eu atendo de um local reservado e peço que você também esteja em um lugar onde possa falar à vontade.</li>
+          <li>O atendimento online não é um serviço de emergência. Em crise, ligue 188 (CVV, 24 h, gratuito) ou 192 (SAMU). Fora do Brasil, ligue para o número de emergência do país onde você está.</li>
+          <li>Você pode encerrar a terapia quando quiser. Se outro profissional for mais indicado para o seu caso, eu faço o encaminhamento.</li>
+        </ul>
+        <a class="more" href="#atendimento">Como funciona o atendimento →</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="atendimento">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Como funciona o atendimento</h2>
+      <p>O que esperar das sessões, como o sigilo funciona e quais são os seus direitos.</p>
+    </div>
+    <div class="groups">
+      <article class="group">
+        <h3>Para quem é</h3>
+        <ul>
+          <li>Adultos (18 anos ou mais), em atendimento individual, no Brasil ou no exterior (em português).</li>
+          <li>Não atendo crianças, adolescentes, casais ou famílias. Nesses casos, indico colegas.</li>
+        </ul>
+      </article>
+      <article class="group">
+        <h3>Como as sessões funcionam</h3>
+        <ul>
+          <li>Por videochamada no Google Meet, com 50 ou 30 minutos, semanais, quinzenais ou avulsas.</li>
+          <li>A TCC é um trabalho em parceria: costumamos combinar pequenas atividades para fazer entre as sessões.</li>
+          <li>Nas primeiras sessões, entendemos juntos o que trouxe você e combinamos os objetivos do trabalho.</li>
+          <li>De tempos em tempos, peço que você responda uma escala breve. O resultado ajuda a ver a evolução, não é diagnóstico e sempre é conversado em sessão.</li>
+          <li>Revisamos o andamento com regularidade, para que a terapia dure o tempo necessário, nem mais nem menos.</li>
+          <li>Valores, faltas, cancelamento com 24 horas de antecedência e reposições ficam em um contrato escrito, apresentado antes de começarmos.</li>
+          <li>Mensagens por WhatsApp ou e-mail servem para horários, avisos e pagamentos. Os assuntos da terapia ficam para a sessão. Respondo em até 24 horas.</li>
+        </ul>
+      </article>
+      <article class="group">
+        <h3>O que o sigilo protege</h3>
+        <ul>
+          <li>Tudo o que você conta em sessão, o fato de você estar em terapia, seus registros e os resultados das escalas.</li>
+          <li>Não falo sobre você com familiares, empregador ou outros profissionais sem a sua autorização.</li>
+          <li>Se você pedir ou autorizar contato com outro profissional (um psiquiatra, por exemplo), compartilho só o que for necessário para o seu cuidado, e quem recebe também fica obrigado a manter sigilo.</li>
+        </ul>
+      </article>
+      <article class="group">
+        <h3>Quando o sigilo tem limites</h3>
+        <ul>
+          <li>Se houver risco sério à sua vida ou à de outra pessoa, posso precisar avisar alguém (um familiar que você indicou ou um serviço de saúde). Informo só o necessário para proteger, buscando o menor prejuízo possível, e, sempre que der, converso com você antes.</li>
+          <li>Quando a lei obriga uma comunicação, como em algumas situações de violência.</li>
+          <li>Se eu for chamado pela Justiça, informo apenas o estritamente necessário, dentro do Código de Ética.</li>
+        </ul>
+      </article>
+      <article class="group">
+        <h3>Seus registros (prontuário)</h3>
+        <ul>
+          <li>Registro um resumo de cada sessão: objetivos, evolução, procedimentos, encaminhamentos e documentos emitidos. Não é uma transcrição do que você diz.</li>
+          <li>O prontuário é guardado em meio digital protegido, sem uso de nuvem, por no mínimo 20 anos após o último registro, como determina a lei. Depois disso, é descartado de forma segura.</li>
+          <li>Você tem direito de acesso ao que está registrado sobre você, e pode pedir documentos como declaração de comparecimento, relatório ou parecer, sem custo adicional.</li>
+          <li>Se um dia eu precisar encerrar minhas atividades, os registros terão destino seguro.</li>
+        </ul>
+      </article>
+      <article class="group">
+        <h3>Privacidade no atendimento online</h3>
+        <ul>
+          <li>As sessões não são gravadas. O contrato proíbe que qualquer um de nós grave áudio, vídeo ou imagem sem autorização por escrito do outro.</li>
+          <li>Atendo de uma sala reservada, com fone de ouvido. No começo da sessão, confirmamos que só nós dois estamos na conversa.</li>
+          <li>Peço que você esteja em um local privado, sem outras pessoas, de preferência com fone e boa conexão. Se alguém se aproximar, podemos pausar.</li>
+          <li>O Google Meet usa criptografia na transmissão, e cada sessão tem o seu link. Se a conexão cair, retomamos pelo mesmo link. Se a internet não voltar, seguimos por chamada de áudio no WhatsApp.</li>
+        </ul>
+      </article>
+      <article class="group alert">
+        <h3>Em situações de crise</h3>
+        <ul>
+          <li>As sessões online e as mensagens não substituem atendimento de emergência. Em crise, ligue 188 (CVV) ou 192 (SAMU), ou procure o pronto-socorro mais próximo. Fora do Brasil, ligue para o número de emergência do país onde você está.</li>
+          <li>Você também pode me ligar, sabendo que posso não atender na hora.</li>
+          <li>Se uma situação de risco surgir durante uma sessão, decidimos juntos os próximos passos, incluindo serviços presenciais, se for preciso.</li>
+        </ul>
+      </article>
+      <article class="group">
+        <h3>Respeito e autonomia</h3>
+        <ul>
+          <li>Atendo sem julgamentos e sem impor crenças religiosas, políticas ou morais.</li>
+          <li>A relação é exclusivamente profissional.</li>
+          <li>Você pode encerrar a terapia quando quiser. Se outra abordagem ou outro profissional for mais adequado, eu faço o encaminhamento.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="escalas">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Escalas de acompanhamento</h2>
+      <p>Questionários curtos, de uso livre e validados em português, usados para acompanhar a evolução ao longo da terapia. Responda a escala combinada em sessão e envie o resultado para mim pelo WhatsApp.</p>
+    </div>
+
+    <div class="notes">
+      <div class="note"><strong>Suas respostas não saem deste aparelho</strong>A pontuação é calculada no próprio navegador. Nada é enviado nem armazenado, e tudo se apaga quando você fecha a página.</div>
+      <div class="note"><strong>Não é diagnóstico</strong>As escalas indicam a intensidade de sintomas no período perguntado. O resultado deve ser conversado em sessão.</div>
+      <div class="note alert"><strong>Precisa de ajuda agora?</strong>Ligue 188 (CVV, 24 horas, gratuito) ou 192 (SAMU). Em risco imediato, procure o pronto-socorro mais próximo. Fora do Brasil, ligue para o número de emergência do país onde você está.</div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Escalas" id="tabs"></div>
+    <div id="panel" role="tabpanel"></div>
+  </div>
+</section>
+
+<section id="publicacoes">
+  <div class="wrap">
+    <div class="section-head"><h2>Publicações</h2></div>
+    <article class="pub">
+      <p class="meta">Artigo · 2025 · PLURAL – Revista de Psicologia UNESP Bauru, v. 5, e025007</p>
+      <h3>Estratégias de redução de danos na perspectiva do behaviorismo radical: uma revisão integrativa</h3>
+      <p class="authors"><strong>Vasconcelos, P. H. G. P.</strong>, Loureiro, P. C. T., Brasileiro, F. N. V., Valderlon, Y., &amp; Campos, M. A.</p>
+      <p>Revisão integrativa (2018–2024) que mapeia estratégias de redução de danos no cuidado a pessoas que usam substâncias psicoativas, analisadas a partir da análise do comportamento.</p>
+      <div class="kw"><span>Redução de danos</span><span>Análise do comportamento</span><span>Behaviorismo radical</span><span>Uso de substâncias</span></div>
+      <p><a href="https://revistaplural.emnuvens.com.br/prp/article/download/125/84/1172" target="_blank" rel="noopener noreferrer">Ler o artigo (PDF)</a></p>
+    </article>
+    <p class="pub-more">Outras publicações em coautoria estão listadas no <a href="https://orcid.org/0009-0009-5403-5966" target="_blank" rel="noopener noreferrer">perfil ORCID</a> (orcid.org/0009-0009-5403-5966).</p>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Contato</h2>
+      <p>Para agendar a primeira sessão ou tirar dúvidas sobre o atendimento.</p>
+    </div>
+    <dl class="contact">
+      <div class="card"><dt>WhatsApp</dt><dd><a href="https://wa.me/5585999986491" target="_blank" rel="noopener noreferrer">(85) 99998-6491</a></dd></div>
+      <div class="card"><dt>E-mail</dt><dd><a href="mailto:pedrohenriquegomespsi@gmail.com">pedrohenriquegomespsi@gmail.com</a></dd></div>
+      <div class="card"><dt>Atendimento</dt><dd>Online, para adultos, com horário marcado</dd></div>
+    </dl>
+
+    <div class="booking" id="agendar">
+      <h3>Agendar a primeira sessão</h3>
+      <p>Primeira sessão por videochamada, de 50 minutos. Se preferir uma sessão de 30 minutos, combine pelo WhatsApp. Depois do agendamento, envio o contrato, com valores e forma de pagamento.</p>
+      <div class="cta" style="margin-top:4px">
+        <a class="btn js-agendar" href="https://wa.me/5585999986491?text=Ol%C3%A1%2C%20Pedro!%20Gostaria%20de%20agendar%20uma%20primeira%20sess%C3%A3o." target="_blank" rel="noopener noreferrer">Agendar primeira sessão</a>
+      </div>
+      <p class="cta-note js-agendar-nota">Por enquanto, o agendamento é feito pelo WhatsApp.</p>
+    </div>
+
+    <div class="privacy" id="privacidade">
+      <h3>Privacidade</h3>
+      <p><b>Neste site.</b> Este site não tem formulários, cadastro nem ferramentas de análise de visitas, e não carrega recursos de outros servidores. As respostas das escalas são calculadas no seu próprio aparelho e não são enviadas a lugar nenhum. Só sai do aparelho o que você decidir copiar e me mandar.</p>
+      <p class="js-agenda-only" hidden><b>Agendamento.</b> O botão "Agendar" abre a página de agendamento do Google Agenda, um serviço do Google. Lá você informa nome, e-mail e telefone. Esses dados ficam na minha agenda e no e-mail de confirmação, e o Google também os trata, de acordo com a política de privacidade dele. Uso esses dados apenas para marcar, lembrar e, se preciso, remarcar o horário. Não pergunto o motivo da consulta, e o título do evento é neutro. Se preferir não usar o Google, agende pelo WhatsApp ou por e-mail.</p>
+      <p><b>Hospedagem.</b> O site fica no GitHub Pages, que pode registrar dados técnicos de acesso (como o endereço IP) por segurança. Eu não tenho acesso a esses dados.</p>
+      <p><b>Seus direitos.</b> Você pode pedir acesso, correção ou exclusão dos seus dados de contato e de agendamento, ressalvados os registros que a lei e o Conselho Federal de Psicologia me obrigam a guardar se você se tornar paciente. Basta escrever para <a href="mailto:pedrohenriquegomespsi@gmail.com">pedrohenriquegomespsi@gmail.com</a>.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Pedro Henrique Gomes Pinheiro Vasconcelos · Psicólogo · CRP 11/24900</p>
+    <p>As escalas desta página são instrumentos de rastreio de uso livre e não substituem avaliação profissional.</p>
+    <p>PHQ-9 e GAD-7: desenvolvidos pelos Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke e colegas, com um subsídio educacional da Pfizer Inc. WHO-5: © Organização Mundial da Saúde, 2024, licença CC BY-NC-SA 3.0 IGO; esta tradução não foi criada pela OMS, e a OMS não endossa este serviço. Fontes IBM Plex: licença SIL Open Font License 1.1.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     AGENDAMENTO: cole aqui o link da página "Primeira sessão"
+     do Google Agenda (ex.: "https://calendar.app.google/...").
+     Enquanto ficar vazio, os botões de agendamento abrem o WhatsApp.
+     ============================================================ */
+  var AGENDA_URL = "";
+
+  function setupAgenda() {
+    if (!AGENDA_URL) return;
+    Array.prototype.forEach.call(document.querySelectorAll(".js-agendar"), function (a) { a.href = AGENDA_URL; });
+    Array.prototype.forEach.call(document.querySelectorAll(".js-agendar-nota"), function (p) {
+      p.textContent = "Abre a agenda do Google em nova aba. Você informa nome, e-mail e telefone. Não é preciso dizer o motivo da consulta. Se preferir, agende pelo WhatsApp.";
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".js-agenda-only"), function (p) { p.hidden = false; });
+  }
+  setupAgenda();
+
+  function opts(labels, values) {
+    return labels.map(function (t, i) { return { t: t, v: values ? values[i] : i }; });
+  }
+
+  var FREQ = opts(["Nenhuma vez", "Vários dias", "Mais da metade dos dias", "Quase todos os dias"]);
+  var DASS = opts(["Não se aplicou de maneira alguma", "Aplicou-se em algum grau, ou por pouco tempo", "Aplicou-se em algum grau considerável, ou por uma boa parte do tempo", "Aplicou-se muito, ou na maioria do tempo"]);
+  var WHO = opts(["O tempo todo", "A maioria do tempo", "Mais do que a metade do tempo", "Menos do que a metade do tempo", "Às vezes", "Em nenhum momento"], [5, 4, 3, 2, 1, 0]);
+  var AUD_FREQ = opts(["Nunca", "Menos que uma vez ao mês", "Uma vez ao mês", "Uma vez por semana", "Todos os dias ou quase todos"]);
+  var AUD_SIM = opts(["Não", "Sim, mas não no último ano", "Sim, durante o último ano"], [0, 2, 4]);
+
+  function band(score, cuts) {
+    for (var i = 0; i < cuts.length; i++) {
+      if (score <= cuts[i].max) return { label: cuts[i].label, sev: cuts[i].sev };
+    }
+    var last = cuts[cuts.length - 1];
+    return { label: last.label, sev: last.sev };
+  }
+  function sum(a) { return a.reduce(function (s, v) { return s + v; }, 0); }
+
+  var RISK_HTML =
+    "<strong class=\"title\">Sua resposta merece atenção agora.</strong>" +
+    "<p>Você marcou que, nas últimas duas semanas, teve pensamentos de se ferir ou de que seria melhor estar morto(a).</p>" +
+    "<ul>" +
+    "<li>Se você corre perigo agora ou pensa em se ferir: ligue <strong>192 (SAMU)</strong> ou vá ao pronto-socorro mais próximo. Fora do Brasil, ligue para o número de emergência local.</li>" +
+    "<li>Para conversar com alguém agora, a qualquer hora: <strong>188 (CVV)</strong>, gratuito.</li>" +
+    "<li>Envie este resultado para mim. Eu posso não ver a mensagem na hora; por isso, se for urgente, não espere a minha resposta.</li>" +
+    "</ul>";
+
+  var SCALES = [
+    {
+      id: "phq-9", name: "PHQ-9", sub: "Depressão · 9 perguntas",
+      instr: "Durante as últimas 2 semanas, com que frequência você foi incomodado/a por qualquer um dos problemas abaixo?",
+      about: "Questionário sobre a Saúde do/a Paciente. Avalia a intensidade de sintomas de depressão nas últimas duas semanas.",
+      ref: "Kroenke K, Spitzer RL, Williams JBW. J Gen Intern Med. 2001;16(9):606-13. Versão em português do Brasil: Pfizer. Ponto de corte estudado no Brasil: Osório FL et al. Perspect Psychiatr Care. 2009;45(3):216-27. Desenvolvido pelos Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke e colegas, com um subsídio educacional da Pfizer Inc. Não é necessária permissão para reproduzir, traduzir, exibir ou distribuir.",
+      options: FREQ,
+      riskItem: 8,
+      items: [
+        "Pouco interesse ou pouco prazer em fazer as coisas",
+        "Se sentir “para baixo”, deprimido/a ou sem perspectiva",
+        "Dificuldade para pegar no sono ou permanecer dormindo, ou dormir mais do que de costume",
+        "Se sentir cansado/a ou com pouca energia",
+        "Falta de apetite ou comendo demais",
+        "Se sentir mal consigo mesmo/a — ou achar que você é um fracasso ou que decepcionou sua família ou você mesmo/a",
+        "Dificuldade para se concentrar nas coisas, como ler o jornal ou ver televisão",
+        "Lentidão para se movimentar ou falar, a ponto das outras pessoas perceberem? Ou o oposto – estar tão agitado/a ou irrequieto/a que você fica andando de um lado para o outro muito mais do que de costume",
+        "Pensar em se ferir de alguma maneira ou que seria melhor estar morto/a"
+      ],
+      extra: {
+        label: "Dificuldade no dia a dia",
+        q: "Se você assinalou qualquer um dos problemas, indique o grau de dificuldade que os mesmos lhe causaram para realizar seu trabalho, tomar conta das coisas em casa ou para se relacionar com as pessoas?",
+        hint: "Esta pergunta não soma pontos.",
+        options: ["Nenhuma dificuldade", "Alguma dificuldade", "Muita dificuldade", "Extrema dificuldade"]
+      },
+      score: function (a) {
+        var t = sum(a);
+        var b = band(t, [
+          { max: 4, label: "Sintomas mínimos", sev: 0 }, { max: 9, label: "Sintomas leves", sev: 1 },
+          { max: 14, label: "Sintomas moderados", sev: 2 }, { max: 19, label: "Moderadamente graves", sev: 3 },
+          { max: 27, label: "Sintomas graves", sev: 4 }
+        ]);
+        return {
+          total: t, max: 27, band: b,
+          subs: [{ name: "Ponto de corte (10 pontos)", text: t >= 10 ? "Atingido" : "Não atingido", band: t >= 10 ? { label: "Avaliar", sev: 2 } : null }],
+          explain: "Total de 0 a 27: 0–4 sintomas mínimos, 5–9 leves, 10–14 moderados, 15–19 moderadamente graves, 20–27 graves. Essas faixas não foram validadas no Brasil. A partir de 10 pontos, vale uma avaliação mais aprofundada. Em um estudo brasileiro com outro formato de resposta, o corte foi de 9 pontos (Santos et al., 2013)."
+        };
+      }
+    },
+    {
+      id: "gad-7", name: "GAD-7", sub: "Ansiedade · 7 perguntas",
+      instr: "Durante as duas últimas semanas, com que frequência você foi incomodado/a pelos problemas abaixo?",
+      about: "Avalia a intensidade de sintomas de ansiedade generalizada nas últimas duas semanas.",
+      ref: "Spitzer RL, Kroenke K, Williams JBW, Löwe B. Arch Intern Med. 2006;166(10):1092-7. Versão em português do Brasil: Pfizer. Evidências no Brasil: Monteiro RP et al. Int J Ment Health Addict. 2022;20:1023-34. Uso livre, sem necessidade de permissão.",
+      options: FREQ,
+      items: [
+        "Sentir-se nervoso/a, ansioso/a ou muito tenso/a",
+        "Não ser capaz de impedir ou de controlar as preocupações",
+        "Preocupar-se muito com diversas coisas",
+        "Dificuldade para relaxar",
+        "Ficar tão agitado/a que se torna difícil permanecer sentado/a",
+        "Ficar facilmente aborrecido/a ou irritado/a",
+        "Sentir medo como se algo horrível fosse acontecer"
+      ],
+      score: function (a) {
+        var t = sum(a);
+        var b = band(t, [
+          { max: 4, label: "Ansiedade mínima", sev: 0 }, { max: 9, label: "Ansiedade leve", sev: 1 },
+          { max: 14, label: "Ansiedade moderada", sev: 2 }, { max: 21, label: "Ansiedade grave", sev: 3 }
+        ]);
+        return {
+          total: t, max: 21, band: b, subs: [],
+          explain: "Total de 0 a 21: 0–4 ansiedade mínima, 5–9 leve, 10–14 moderada, 15–21 grave. A partir de 10 pontos, recomenda-se uma avaliação mais aprofundada. Ainda não há ponto de corte clínico estudado no Brasil."
+        };
+      }
+    },
+    {
+      id: "dass-21", name: "DASS-21", sub: "Depressão, ansiedade e estresse · 21 perguntas",
+      instr: "Leia cada afirmação e marque o quanto ela se aplicou a você durante a última semana.",
+      about: "Mede três estados emocionais em subescalas de 7 itens. A soma de cada subescala é multiplicada por 2, como manda a correção da escala.",
+      ref: "Lovibond SH, Lovibond PF. Manual for the DASS. 1995. Versão brasileira: Vignola RCB, Tucci AM. J Affect Disord. 2014;155:104-9. Domínio público. Pontos de corte do manual original; ainda não há normas brasileiras.",
+      options: DASS,
+      items: [
+        "Achei difícil me acalmar",
+        "Senti minha boca seca",
+        "Não consegui vivenciar nenhum sentimento positivo",
+        "Tive dificuldade em respirar em alguns momentos (ex.: respiração ofegante, falta de ar, sem ter feito esforço físico)",
+        "Achei difícil ter iniciativa para fazer as coisas",
+        "Tive a tendência de reagir de forma exagerada às situações",
+        "Senti tremores (ex.: nas mãos)",
+        "Senti que estava sempre nervoso(a)",
+        "Preocupei-me com situações em que eu pudesse entrar em pânico e parecesse ridículo(a)",
+        "Senti que não tinha nada a desejar",
+        "Senti-me agitado(a)",
+        "Achei difícil relaxar",
+        "Senti-me depressivo(a) e sem ânimo",
+        "Fui intolerante com as coisas que me impediam de continuar o que eu estava fazendo",
+        "Senti que ia entrar em pânico",
+        "Não consegui me entusiasmar com nada",
+        "Senti que não tinha valor como pessoa",
+        "Senti que estava um pouco emotivo(a)/sensível demais",
+        "Sabia que meu coração estava alterado mesmo não tendo feito nenhum esforço físico (ex.: aumento da frequência cardíaca, disritmia cardíaca)",
+        "Senti medo sem ter motivo",
+        "Senti que a vida não tinha sentido"
+      ],
+      score: function (a) {
+        function sub(idx) { return idx.reduce(function (s, i) { return s + a[i - 1]; }, 0) * 2; }
+        var d = sub([3, 5, 10, 13, 16, 17, 21]);
+        var x = sub([2, 4, 7, 9, 15, 19, 20]);
+        var s = sub([1, 6, 8, 11, 12, 14, 18]);
+        var L = ["Normal", "Leve", "Moderado", "Grave", "Extremamente grave"];
+        function cut(v, c) { var b = 4; for (var i = 0; i < c.length; i++) { if (v <= c[i]) { b = i; break; } } return { label: L[b], sev: b }; }
+        var bd = cut(d, [9, 13, 20, 27]), bx = cut(x, [7, 9, 14, 19]), bs = cut(s, [14, 18, 25, 33]);
+        var worst = [bd, bx, bs].reduce(function (m, b) { return b.sev > m.sev ? b : m; });
+        return {
+          total: null, max: null, band: worst, headline: "Maior faixa entre as subescalas",
+          subs: [
+            { name: "Depressão", v: d, max: 42, band: bd },
+            { name: "Ansiedade", v: x, max: 42, band: bx },
+            { name: "Estresse", v: s, max: 42, band: bs }
+          ],
+          explain: "Faixas (já multiplicadas por 2). Depressão: até 9 normal, 10–13 leve, 14–20 moderado, 21–27 grave, 28+ extremamente grave. Ansiedade: até 7, 8–9, 10–14, 15–19, 20+. Estresse: até 14, 15–18, 19–25, 26–33, 34+."
+        };
+      }
+    },
+    {
+      id: "who-5", name: "WHO-5", sub: "Bem-estar · 5 perguntas",
+      instr: "Marque a alternativa que melhor descreve como você se sentiu nas últimas duas semanas.",
+      about: "Índice de Bem-Estar da Organização Mundial da Saúde. Aqui, pontuações mais altas são melhores.",
+      ref: "World Health Organization. The World Health Organization-Five Well-Being Index (WHO-5). Geneva: WHO; 2024. Licença CC BY-NC-SA 3.0 IGO. Versão brasileira: Souza CM, Hidalgo MPL. Eur Arch Psychiatry Clin Neurosci. 2012;262(3):239-44. Esta tradução não foi criada pela OMS.",
+      options: WHO,
+      prefix: "Nas últimas duas semanas…",
+      items: [
+        "…eu estava alegre e de bom humor",
+        "…me senti calmo(a) e relaxado(a)",
+        "…me senti disposto(a) e renovado(a) ao acordar",
+        "…me senti cheio(a) de energia e ativo(a)",
+        "…o meu dia foi cheio de coisas que me interessavam"
+      ],
+      score: function (a) {
+        var raw = sum(a);
+        var b = raw >= 13 ? { label: "Bem-estar adequado", sev: 0 } : { label: "Bem-estar reduzido", sev: 2 };
+        return {
+          total: raw, max: 25, band: b,
+          subs: [{ name: "Em percentual", text: (raw * 4) + "%", band: null }],
+          explain: "Pontuação de 0 a 25 (ou 0 a 100%). Abaixo de 13 pontos (50%) indica bem-estar reduzido e merece atenção em sessão."
+        };
+      }
+    },
+    {
+      id: "audit", name: "AUDIT", sub: "Uso de álcool · 10 perguntas",
+      instr: "Marque a alternativa que ficar mais próxima da sua resposta.",
+      about: "Teste para Identificação de Problemas Relacionados ao Uso de Álcool, da Organização Mundial da Saúde. Nas perguntas 2 e 3, transforme o que você bebe em “doses” usando a tabela abaixo.",
+      extraHtml:
+        "<div class=\"doses\"><strong>Como contar as “doses”</strong><ul>" +
+        "<li><b>Cerveja:</b> 1 copo de chope (350 ml) ou 1 lata = 1 dose; 1 garrafa = 2 doses</li>" +
+        "<li><b>Vinho:</b> 1 copo comum grande (250 ml) = 2 doses; 1 garrafa = 8 doses</li>" +
+        "<li><b>Cachaça, vodca, uísque ou conhaque:</b> 1 “martelinho” (60 ml) = 2 doses; 1 “martelo” (100 ml) = 3 doses; 1 garrafa = mais de 20 doses</li>" +
+        "<li><b>Uísque, rum, licor etc.:</b> 1 dose de dosador (45 a 50 ml) = 1 dose</li></ul>" +
+        "<p class=\"who\">A Organização Mundial da Saúde usa como referência uma dose padrão de 10 g de álcool puro. Esta versão brasileira do AUDIT usa equivalências aproximadas em medidas comuns, como as da tabela acima.</p></div>",
+      ref: "Babor TF, Higgins-Biddle JC, Saunders JB, Monteiro MG. AUDIT: guidelines for use in primary care. 2nd ed. Geneva: WHO; 2001. Versão brasileira: Méndez EB. Uma versão brasileira do AUDIT. Dissertação (Mestrado), Universidade Federal de Pelotas; 1999. Uso livre.",
+      perItem: [
+        opts(["Nunca", "Uma vez por mês ou menos", "Duas a quatro vezes por mês", "Duas a três vezes por semana", "Quatro ou mais vezes por semana"]),
+        opts(["1 ou 2 “doses”", "3 ou 4 “doses”", "5 ou 6 “doses”", "7 a 9 “doses”", "10 ou mais “doses”"]),
+        AUD_FREQ, AUD_FREQ, AUD_FREQ, AUD_FREQ, AUD_FREQ, AUD_FREQ,
+        AUD_SIM, AUD_SIM
+      ],
+      items: [
+        "Com que frequência você consome bebidas alcoólicas?",
+        "Nas ocasiões em que bebe, quantas doses, copos ou garrafas você costuma tomar?",
+        "Com que frequência você toma seis ou mais doses em uma ocasião?",
+        "Com que frequência, durante o último ano, você achou que não seria capaz de controlar a quantidade de bebida depois de começar?",
+        "Com que frequência, durante o último ano, você não conseguiu cumprir com algum compromisso por causa da bebida?",
+        "Com que frequência, durante o último ano, depois de ter bebido muito, você precisou beber pela manhã para se sentir melhor?",
+        "Com que frequência, durante o último ano, você sentiu culpa ou remorso depois de beber?",
+        "Com que frequência, durante o último ano, você não conseguiu se lembrar do que aconteceu na noite anterior por causa da bebida?",
+        "Alguma vez na vida você ou alguma outra pessoa já se machucou, se prejudicou porque você bebeu?",
+        "Alguma vez na vida algum parente, amigo, médico ou outro profissional da saúde já se preocupou com você por causa de bebida ou te disse para parar de beber?"
+      ],
+      score: function (a) {
+        var t = sum(a);
+        var b = band(t, [
+          { max: 7, label: "Baixo risco", sev: 0 }, { max: 15, label: "Uso de risco", sev: 1 },
+          { max: 19, label: "Uso nocivo", sev: 2 }, { max: 40, label: "Provável dependência", sev: 3 }
+        ]);
+        return {
+          total: t, max: 40, band: b, subs: [],
+          explain: "Total de 0 a 40. Zonas: 0–7 baixo risco, 8–15 uso de risco, 16–19 uso nocivo, 20–40 provável dependência. O ponto de corte de 8 pontos foi estudado no Brasil (Méndez, 1999). Alguns autores sugerem cortes menores para mulheres e idosos."
+        };
+      }
+    }
+  ];
+
+  /* Links antigos da versão 1 continuam funcionando */
+  var ALIASES = { "phq-4": "phq-9", "audit-c": "audit" };
+
+  var answers = {}, extras = {}, riskSeen = {};
+  SCALES.forEach(function (s) { answers[s.id] = new Array(s.items.length).fill(null); extras[s.id] = null; riskSeen[s.id] = false; });
+  var current = SCALES[0].id;
+  var tabsEl = document.getElementById("tabs");
+  var panelEl = document.getElementById("panel");
+
+  function el(tag, attrs, html) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    if (html != null) e.innerHTML = html;
+    return e;
+  }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function byId(id) { return SCALES.filter(function (x) { return x.id === id; })[0]; }
+
+  function renderTabs() {
+    tabsEl.innerHTML = "";
+    SCALES.forEach(function (s) {
+      var b = el("button", { "class": "tab", type: "button", role: "tab", id: "tab-" + s.id, "aria-controls": "panel", "aria-selected": String(s.id === current) },
+        "<b>" + esc(s.name) + "</b><span>" + esc(s.sub) + "</span>");
+      b.addEventListener("click", function () { select(s.id, true); });
+      tabsEl.appendChild(b);
+    });
+  }
+
+  function optionsFor(s, idx) { return s.perItem ? s.perItem[idx] : s.options; }
+
+  function radioGroup(name, list, checkedValue, onChange) {
+    var box = el("div", { "class": "opts" });
+    list.forEach(function (o, k) {
+      var id = name + "-o" + k;
+      var wrap = el("div", { "class": "opt" });
+      var inp = el("input", { type: "radio", name: name, id: id, value: String(o.v) });
+      if (checkedValue === o.v) inp.checked = true;
+      inp.addEventListener("change", function () { onChange(o.v); });
+      wrap.appendChild(inp);
+      var pts = "<span class=\"v\">" + o.v + " " + (o.v === 1 ? "ponto" : "pontos") + "</span>";
+      wrap.appendChild(el("label", { "for": id }, esc(o.t) + pts));
+      box.appendChild(wrap);
+    });
+    return box;
+  }
+
+  function renderPanel() {
+    var s = byId(current);
+    panelEl.setAttribute("aria-labelledby", "tab-" + s.id);
+    panelEl.innerHTML = "";
+    var wrap = el("div", { "class": "scale" });
+    var main = el("div", { "class": "scale-main" });
+    main.appendChild(el("div", { "class": "scale-info" },
+      "<h3>" + esc(s.name) + "</h3><p class=\"instr\">" + esc(s.instr) + "</p><p>" + esc(s.about) + "</p>" +
+      (s.extraHtml || "") + "<small>Fonte: " + esc(s.ref) + "</small>"));
+
+    s.items.forEach(function (text, i) {
+      var fs = el("fieldset", { "class": "item" + (answers[s.id][i] != null ? " done" : "") });
+      fs.appendChild(el("legend", null, "<span class=\"n\">" + (i + 1) + ".</span><span>" + esc(text) + "</span>"));
+      fs.appendChild(radioGroup(s.id + "-q" + (i + 1), optionsFor(s, i), answers[s.id][i], function (v) {
+        answers[s.id][i] = v;
+        fs.classList.add("done");
+        if (s.riskItem === i && v > 0) {
+          riskSeen[s.id] = true;
+          var box = document.getElementById("risk-inline");
+          if (box) box.hidden = false;
+        }
+        renderResult(s);
+      }));
+      main.appendChild(fs);
+      if (s.riskItem === i) {
+        var alertBox = el("div", { "class": "risk", id: "risk-inline", role: "alert" }, RISK_HTML);
+        alertBox.hidden = !riskSeen[s.id];
+        main.appendChild(alertBox);
+      }
+    });
+
+    if (s.extra) {
+      var fx = el("fieldset", { "class": "item extra" + (extras[s.id] != null ? " done" : "") });
+      fx.appendChild(el("legend", null, "<span>" + esc(s.extra.q) + "</span>"));
+      fx.appendChild(el("span", { "class": "hint" }, esc(s.extra.hint)));
+      /* A pergunta extra não soma pontos: guardamos só o texto escolhido */
+      var box = el("div", { "class": "opts" });
+      s.extra.options.forEach(function (t, k) {
+        var id = s.id + "-extra-o" + k;
+        var w = el("div", { "class": "opt" });
+        var inp = el("input", { type: "radio", name: s.id + "-extra", id: id, value: t });
+        if (extras[s.id] === t) inp.checked = true;
+        inp.addEventListener("change", function () { extras[s.id] = t; fx.classList.add("done"); });
+        w.appendChild(inp);
+        w.appendChild(el("label", { "for": id }, esc(t)));
+        box.appendChild(w);
+      });
+      fx.appendChild(box);
+      main.appendChild(fx);
+    }
+
+    var aside = el("aside", { "class": "result", id: "result", "aria-live": "polite" });
+    wrap.appendChild(main);
+    wrap.appendChild(aside);
+    panelEl.appendChild(wrap);
+    renderResult(s);
+  }
+
+  function chip(b) { return b ? "<span class=\"chip sev-" + b.sev + "\">" + esc(b.label) + "</span>" : ""; }
+
+  function today() {
+    var d = new Date();
+    return String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + d.getFullYear();
+  }
+
+  function riskValue(s) { return s.riskItem != null ? answers[s.id][s.riskItem] : null; }
+
+  function renderResult(s) {
+    var aside = document.getElementById("result");
+    var a = answers[s.id];
+    var done = a.filter(function (v) { return v != null; }).length;
+    var n = a.length;
+    var html = "<h3>Resultado · " + esc(s.name) + "</h3>";
+    if (riskSeen[s.id]) html += "<div class=\"risk\"><strong class=\"title\">Atenção à pergunta " + (s.riskItem + 1) + "</strong><p>Se você corre perigo agora, ligue <strong>192 (SAMU)</strong> ou <strong>188 (CVV)</strong>. Fora do Brasil, ligue para o número de emergência local. Eu posso não ver a sua mensagem na hora.</p></div>";
+    html += "<div class=\"progress\"><span>" + done + " de " + n + " respondidas</span><div class=\"bar\"><i style=\"width:" + Math.round(done / n * 100) + "%\"></i></div></div>";
+
+    if (done < n) {
+      html += "<p class=\"empty\">Responda todas as perguntas para ver a pontuação.</p>";
+      aside.innerHTML = html;
+      return;
+    }
+    var r = s.score(a);
+    html += "<div class=\"score\">";
+    if (r.total != null) html += "<div class=\"big\">" + r.total + " <small>de " + r.max + "</small></div>";
+    else html += "<div class=\"empty\">" + esc(r.headline) + "</div>";
+    html += chip(r.band) + "</div>";
+    if (r.subs.length) {
+      html += "<ul class=\"subs\">" + r.subs.map(function (x) {
+        var val = x.text != null ? esc(x.text) : x.v + " <small>/ " + x.max + "</small>";
+        return "<li><span>" + esc(x.name) + "</span><span><b>" + val + "</b> " + chip(x.band) + "</span></li>";
+      }).join("") + "</ul>";
+    }
+    html += "<p class=\"explain\">" + esc(r.explain) + "</p>";
+    html += "<div class=\"actions\">" +
+      "<label class=\"ini\" for=\"ini\">Suas iniciais (opcional)<input type=\"text\" id=\"ini\" maxlength=\"12\" autocomplete=\"off\" placeholder=\"Ex.: A.B.\"></label>" +
+      "<button type=\"button\" class=\"btn\" id=\"copy\">Copiar resultado</button>" +
+      "<button type=\"button\" class=\"btn ghost\" id=\"clear\">Limpar respostas</button>" +
+      "<div class=\"copy-status\" id=\"copy-status\" role=\"status\"></div></div>";
+    aside.innerHTML = html;
+
+    document.getElementById("copy").addEventListener("click", function () { copyResult(s, r); });
+    document.getElementById("clear").addEventListener("click", function () {
+      answers[s.id] = new Array(n).fill(null);
+      extras[s.id] = null;
+      renderPanel();
+    });
+  }
+
+  function summary(s, r) {
+    var ini = (document.getElementById("ini") || {}).value || "";
+    var lines = ["Resultado " + s.name + " — " + today()];
+    var rv = riskValue(s);
+    if (rv != null && rv > 0) lines.push("ATENÇÃO: item " + (s.riskItem + 1) + " marcado (valor " + rv + ")");
+    if (ini.trim()) lines.push("Iniciais: " + ini.trim());
+    if (r.total != null) lines.push("Total: " + r.total + "/" + r.max + " (" + r.band.label + ")");
+    r.subs.forEach(function (x) {
+      lines.push(x.name + ": " + (x.text != null ? x.text : x.v + "/" + x.max) + (x.band ? " (" + x.band.label + ")" : ""));
+    });
+    if (s.extra && extras[s.id]) lines.push(s.extra.label + ": " + extras[s.id]);
+    lines.push("Respostas: " + answers[s.id].map(function (v, i) { return (i + 1) + "=" + v; }).join(", "));
+    return lines.join("\n");
+  }
+
+  function copyResult(s, r) {
+    var text = summary(s, r);
+    var status = document.getElementById("copy-status");
+    function fallback() {
+      status.textContent = "Não foi possível copiar automaticamente. Selecione o texto abaixo e copie.";
+      var ta = document.getElementById("copy-fallback");
+      if (!ta) {
+        ta = el("textarea", { id: "copy-fallback", "class": "copy-fallback", readonly: "readonly", "aria-label": "Resultado para copiar" });
+        status.parentNode.appendChild(ta);
+      }
+      ta.value = text; ta.focus(); ta.select();
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          status.textContent = "Copiado. Cole na conversa comigo pelo WhatsApp.";
+        }, fallback);
+      } else { fallback(); }
+    } catch (e) { fallback(); }
+  }
+
+  function select(id, scroll) {
+    id = ALIASES[id] || id;
+    if (!byId(id)) return;
+    current = id;
+    renderTabs();
+    renderPanel();
+    if (location.hash !== "#" + id) { try { history.replaceState(null, "", "#" + id); } catch (e) {} }
+    if (scroll) {
+      var top = document.getElementById("escalas");
+      if (top) top.scrollIntoView();
+    }
+  }
+
+  function fromHash() {
+    var h = (location.hash || "").replace("#", "");
+    h = ALIASES[h] || h;
+    if (byId(h)) { select(h, true); return true; }
+    return false;
+  }
+
+  renderTabs();
+  renderPanel();
+  fromHash();
+  window.addEventListener("hashchange", fromHash);
+})();
+</script>
+</body>
+</html>
